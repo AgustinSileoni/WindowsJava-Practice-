@@ -5,24 +5,12 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 @SuppressWarnings("serial")
 public class ventana extends JPanel {
+    //Crea un objeto con esta ventana como referencia
+    Ball ball = new Ball(this);
 
-    int x = 0;
-    int y = 0;
-    int xa = 1;
-    int ya = 1;
-
-    private void moveBall() {
-        if (x + xa < 0)
-            xa = 1;
-        if (x + xa > getWidth() - 30)
-            xa = -1;
-        if (y + ya < 0)
-            ya = 1;
-        if (y + ya > getHeight() - 30)
-            ya = -1;
-
-        x = x + xa;
-        y = y + ya;
+    //Mueve todos los elementos que hay en la ventana
+    private void move(){
+        ball.move();
     }
 
     @Override
@@ -31,7 +19,7 @@ public class ventana extends JPanel {
         Graphics2D g2d = (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
-        g2d.fillOval(x,y,30,30);
+        ball.paint(g2d);
 
     }
 
@@ -45,7 +33,7 @@ public class ventana extends JPanel {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         while(true) {
-            window.moveBall();
+            window.move();
             window.repaint();
             Thread.sleep(10);
         }
