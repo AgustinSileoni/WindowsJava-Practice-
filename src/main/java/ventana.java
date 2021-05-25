@@ -1,6 +1,4 @@
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import javax.swing.*;
@@ -11,6 +9,12 @@ public class ventana extends JPanel {
     //Crea un objeto con esta ventana como referencia
     Ball ball = new Ball(this);
     Racquet racquet = new Racquet(this);
+    int speed=1;
+
+    private int getScore(){
+        return speed - 1;
+    }
+
     public ventana() {
         //Clase Anonima para leer los eventos (Se hace esto porque solo se utiliza una vez)
         KeyListener listener = new KeyListener() {
@@ -50,13 +54,20 @@ public class ventana extends JPanel {
         ball.paint(g2d);
         racquet.paint(g2d);
 
+        g2d.setColor(Color.gray);
+        g2d.setFont(new Font("Verdana", Font.BOLD,30));
+        g2d.drawString(String.valueOf(getScore()),10,30);
+
     }
 
 
     public void gameOver(){
-        JOptionPane.showMessageDialog(this , "Game Over" , "Game Over", JOptionPane.YES_NO_OPTION);
+        JOptionPane.showMessageDialog(this ,
+                "Your score is: " + getScore() ,
+                "Game Over", JOptionPane.YES_NO_OPTION);
         System.exit(ABORT);
     }
+
 
     public static void main (String[] args)throws InterruptedException{
         JFrame frame = new JFrame("Mini Tennis");
@@ -69,14 +80,8 @@ public class ventana extends JPanel {
         while(true) {
             window.move();
             window.repaint();
-            Thread.sleep(8);
-        }/*
-        ventana keyboardExample= new ventana();
-        frame.add(keyboardExample);
-        frame.setSize(200,200);
-        frame.setVisible(true);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        */
+            Thread.sleep(10);
+        }
     }
 
 
